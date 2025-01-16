@@ -2,7 +2,28 @@ import axios from "axios";
 
 const getAllMeals = (setMeal) => {
     axios.get("http://localhost:4000")
-    .then(({data}) => {console.log(data)})
+    .then(({data}) => {console.log(data)
+    setMeal(data)
+    })
 }
 
-export { getAllMeals };
+const addMeal = (title, setTitle, setMeal) => {
+    axios.post("http://localhost:4000/saveMeals", {title})
+    .then((data) => {
+        console.log(data)
+        setTitle("")
+        getAllMeals(setMeal)
+    })
+}
+
+const editMeal = (mealId, title, setTitle, setMeal, setEditing) => {
+    axios.post("http://localhost:4000/editMeals", {_id: mealId, title})
+    .then((data) => {
+        console.log(data)
+        setTitle("")
+        setEditing(false)
+        getAllMeals(setMeal)
+    })
+}
+
+export { getAllMeals, addMeal, editMeal };
